@@ -7,6 +7,7 @@ import PageHeaderWrapper from '@/components/PageHeaderWrapper';
 import AvatarList from '@/components/AvatarList';
 import styles from './Workplace.less';
 import img from './../../images/chayuan.jpg';
+import camera from './../../images/camera.png'
 @connect(({ list, loading }) => ({
   list,
   loading: loading.models.list,
@@ -101,7 +102,7 @@ class CardList extends PureComponent {
       <div className={styles.extraImg}>
         <img
           alt="这是一个标题"
-          src="https://gw.alipayobjects.com/zos/rmsportal/RzwpdLnhmvDJToTdfDPe.png"
+          src={camera}
         />
       </div>
     );
