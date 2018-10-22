@@ -14,7 +14,29 @@ export default {
 
   effects: {
     *login({ payload }, { call, put }) {
-      const response = yield call(fakeAccountLogin, payload);
+       let response={}
+      const { password, userName, type } = payload;
+      if (password === '123456' && userName === 'admin') {
+        response={
+          status: 'ok',
+          type,
+          currentAuthority: 'admin',
+        }
+      }else if (password === '123456' && userName === 'user') {
+        response={
+          status: 'ok',
+          type,
+          currentAuthority: 'user',
+        }
+      }else{
+        response={
+          status: 'error',
+          type,
+          currentAuthority: 'guest',
+        }
+      }
+
+      // const response = yield call(fakeAccountLogin, payload);
       yield put({
         type: 'changeLoginStatus',
         payload: response,

@@ -1,6 +1,6 @@
-import React, { Component } from 'react';
-import { connect } from 'dva';
-import { formatMessage, FormattedMessage } from 'umi/locale';
+import React, {Component} from 'react';
+import {connect} from 'dva';
+import {formatMessage, FormattedMessage} from 'umi/locale';
 import sortBy from 'lodash/sortBy';
 import {
   Row,
@@ -31,12 +31,13 @@ import NumberInfo from '@/components/NumberInfo';
 import numeral from 'numeral';
 import GridContent from '@/components/PageHeaderWrapper/GridContent';
 import Yuan from '@/utils/Yuan';
-import { getTimeDistance } from '@/utils/utils';
+import {getTimeDistance} from '@/utils/utils';
 
 import styles from './Analysis.less';
-const { Option } = Select;
-const { TabPane } = Tabs;
-const { RangePicker } = DatePicker;
+import moment from 'moment'
+const {Option} = Select;
+const {TabPane} = Tabs;
+const {RangePicker} = DatePicker;
 
 const rankingListData = [];
 for (let i = 0; i < 7; i += 1) {
@@ -46,9 +47,9 @@ for (let i = 0; i < 7; i += 1) {
   });
 }
 
-@connect(({ chart, loading }) => ({
+@connect(({chart, loading}) => ({
   chart,
-  loading: loading.effects['chart/fetch'],
+  // loading: loading.effects['chart/fetch'],
 }))
 class Analysis2 extends Component {
   constructor(props) {
@@ -67,24 +68,75 @@ class Analysis2 extends Component {
     currentTabKey: '',
     rangePickerValue: getTimeDistance('year'),
     loading: true,
+    visitData: [],
+    salesData:[],
+    offlineData:[],
+    offlineChartData:[]
   };
 
   componentDidMount() {
-    const { dispatch } = this.props;
-    this.reqRef = requestAnimationFrame(() => {
-      dispatch({
-        type: 'chart/fetch',
+    // const { dispatch } = this.props;
+    // this.reqRef = requestAnimationFrame(() => {
+    //   dispatch({
+    //     type: 'chart/fetch',
+    //   });
+    //   this.timeoutId = setTimeout(() => {
+    //     this.setState({
+    //       loading: false,
+    //     });
+    //   }, 600);
+    // });
+    this.timeoutId = setTimeout(() => {
+      this.setState({
+        loading: false,
       });
-      this.timeoutId = setTimeout(() => {
-        this.setState({
-          loading: false,
-        });
-      }, 600);
-    });
+    })
+    const visitData = [];
+    const beginDay = new Date().getTime();
+
+    const fakeY = [80, 90, 80, 60, 80, 99, 99, 96, 98, 99, 87, 85, 97];
+    for (let i = 0; i < fakeY.length; i += 1) {
+      visitData.push({
+        x: moment(new Date(beginDay + 1000 * 60 * 60 * 24 * i)).format('YYYY-MM-DD'),
+        y: fakeY[i],
+      });
+    }
+
+
+    const salesData = [];
+    for (let i = 0; i < 12; i += 1) {
+      salesData.push({
+        x: `${i + 1}月`,
+        y: Math.floor(Math.random() * 100),
+      });
+    }
+
+    const offlineData = [];
+    for (let i = 0; i <= 5; i += 1) {
+      offlineData.push({
+        name: `${i + 1} 号茶园`,
+        cvr: Math.ceil(Math.random() * 9) / 10,
+      });
+    }
+    const offlineChartData = [];
+    for (let i = 0; i < 24; i += 1) {
+      offlineChartData.push({
+        x: new Date('2018-8-8').getTime() + 1000 * 60 * 60 * i,
+        y1: Math.floor(Math.random() * 100),
+      });
+    }
+
+    this.setState({
+      visitData,
+      salesData,
+      offlineData,
+      offlineChartData
+    })
+
   }
 
   componentWillUnmount() {
-    const { dispatch } = this.props;
+    const {dispatch} = this.props;
     dispatch({
       type: 'chart/clear',
     });
@@ -105,18 +157,18 @@ class Analysis2 extends Component {
   };
 
   handleRangePickerChange = rangePickerValue => {
-    const { dispatch } = this.props;
+    const {dispatch} = this.props;
     this.setState({
       rangePickerValue,
     });
 
-    dispatch({
-      type: 'chart/fetchSalesData',
-    });
+    // dispatch({
+    //   type: 'chart/fetchSalesData',
+    // });
   };
 
   selectDate = type => {
-    const { dispatch } = this.props;
+    const {dispatch} = this.props;
     this.setState({
       rangePickerValue: getTimeDistance(type),
     });
@@ -127,7 +179,7 @@ class Analysis2 extends Component {
   };
 
   isActive(type) {
-    const { rangePickerValue } = this.state;
+    const {rangePickerValue} = this.state;
     const value = getTimeDistance(type);
     if (!rangePickerValue[0] || !rangePickerValue[1]) {
       return '';
@@ -142,26 +194,12 @@ class Analysis2 extends Component {
   }
 
   render() {
-    const { rangePickerValue, salesType, loading: propsLoding, currentTabKey } = this.state;
-    const { chart, loading: stateLoading } = this.props;
+    const {rangePickerValue, salesType, loading: propsLoding, currentTabKey,visitData,salesData,offlineData,offlineChartData} = this.state;
+    const {chart, loading: stateLoading} = this.props;
     const {
-      visitData,
-      visitData2,
-      salesData,
-      searchData,
-      offlineData,
-      offlineChartData,
-      salesTypeData,
-      salesTypeDataOnline,
-      salesTypeDataOffline,
     } = chart;
     const loading = propsLoding || stateLoading;
     let salesPieData;
-    if (salesType === 'all') {
-      salesPieData = salesTypeData;
-    } else {
-      salesPieData = salesType === 'online' ? salesTypeDataOnline : salesTypeDataOffline;
-    }
     const tempData = [];
     for (let i = 0; i < 12; i += 1) {
       tempData.push({
@@ -176,36 +214,29 @@ class Analysis2 extends Component {
       </Menu>
     );
 
-    const iconGroup = (
-      <span className={styles.iconGroup}>
-        <Dropdown overlay={menu} placement="bottomRight">
-          <Icon type="ellipsis" />
-        </Dropdown>
-      </span>
-    );
 
     const salesExtra = (
       <div className={styles.salesExtraWrap}>
         <div className={styles.salesExtra}>
           <a className={this.isActive('today')} onClick={() => this.selectDate('today')}>
-            <FormattedMessage id="app.analysis.all-day" defaultMessage="All Day" />
+            <FormattedMessage id="app.analysis.all-day" defaultMessage="All Day"/>
           </a>
           <a className={this.isActive('week')} onClick={() => this.selectDate('week')}>
-            <FormattedMessage id="app.analysis.all-week" defaultMessage="All Week" />
+            <FormattedMessage id="app.analysis.all-week" defaultMessage="All Week"/>
           </a>
           <a className={this.isActive('month')} onClick={() => this.selectDate('month')}>
-            <FormattedMessage id="app.analysis.all-month" defaultMessage="All Month" />
+            <FormattedMessage id="app.analysis.all-month" defaultMessage="All Month"/>
           </a>
           <a className={this.isActive('year')} onClick={() => this.selectDate('year')}>
-            <FormattedMessage id="app.analysis.all-year" defaultMessage="All Year" />
+            <FormattedMessage id="app.analysis.all-year" defaultMessage="All Year"/>
           </a>
         </div>
         <RangePicker
           value={rangePickerValue}
           onChange={this.handleRangePickerChange}
-          style={{ width: 256 }}
+          style={{width: 256}}
         />
-        <Select defaultValue="1" style={{ width: 120, marginLeft: '12px' }}>
+        <Select defaultValue="1" style={{width: 120, marginLeft: '12px'}}>
           <Option value="1">一号茶园</Option>
           <Option value="2">二号茶园</Option>
           <Option value="3">三号茶园</Option>
@@ -215,50 +246,11 @@ class Analysis2 extends Component {
       </div>
     );
 
-    const columns = [
-      {
-        title: <FormattedMessage id="app.analysis.table.rank" defaultMessage="Rank" />,
-        dataIndex: 'index',
-        key: 'index',
-      },
-      {
-        title: (
-          <FormattedMessage
-            id="app.analysis.table.search-keyword"
-            defaultMessage="Search keyword"
-          />
-        ),
-        dataIndex: 'keyword',
-        key: 'keyword',
-        render: text => <a href="/">{text}</a>,
-      },
-      {
-        title: <FormattedMessage id="app.analysis.table.users" defaultMessage="Users" />,
-        dataIndex: 'count',
-        key: 'count',
-        sorter: (a, b) => a.count - b.count,
-        className: styles.alignRight,
-      },
-      {
-        title: (
-          <FormattedMessage id="app.analysis.table.weekly-range" defaultMessage="Weekly Range" />
-        ),
-        dataIndex: 'range',
-        key: 'range',
-        sorter: (a, b) => a.range - b.range,
-        render: (text, record) => (
-          <Trend flag={record.status === 1 ? 'down' : 'up'}>
-            <span style={{ marginRight: 4 }}>{text}%</span>
-          </Trend>
-        ),
-        align: 'right',
-      },
-    ];
 
     const activeKey = currentTabKey || (offlineData[0] && offlineData[0].name);
 
-    const CustomTab = ({ data, currentTabKey: currentKey }) => (
-      <Row gutter={8} style={{ width: 160, margin: '8px 0' }}>
+    const CustomTab = ({data, currentTabKey: currentKey}) => (
+      <Row gutter={8} style={{width: 160, margin: '8px 0'}}>
         <Col span={12}>
           <NumberInfo
             title={data.name}
@@ -268,7 +260,7 @@ class Analysis2 extends Component {
             theme={currentKey !== data.name && 'light'}
           />
         </Col>
-        <Col span={12} style={{ paddingTop: 36 }}>
+        <Col span={12} style={{paddingTop: 36}}>
           <Pie
             animate={false}
             color={currentKey !== data.name && '#BDE4FF'}
@@ -288,7 +280,7 @@ class Analysis2 extends Component {
       md: 12,
       lg: 12,
       xl: 6,
-      style: { marginBottom: 24 },
+      style: {marginBottom: 24},
     };
     let salesDataRankingListData = sortBy(salesData, o => -o.y);
     let tempDataRankingListData = sortBy(salesData, o => -o.y);
@@ -303,24 +295,24 @@ class Analysis2 extends Component {
               action={
                 <Tooltip
                   title={
-                    <FormattedMessage id="app.analysis.introduce" defaultMessage="introduce" />
+                    <FormattedMessage id="app.analysis.introduce" defaultMessage="introduce"/>
                   }
                 >
-                  <Icon type="info-circle-o" />
+                  <Icon type="info-circle-o"/>
                 </Tooltip>
               }
               total={numeral(8846).format('0,0')}
               footer={
                 <Field
                   label={
-                    <FormattedMessage id="app.analysis.day-visits" defaultMessage="Day Visits" />
+                    <FormattedMessage id="app.analysis.day-visits" defaultMessage="Day Visits"/>
                   }
                   value={numeral(1234).format('0,0')}
                 />
               }
               contentHeight={46}
             >
-              <MiniArea color="#975FE4" data={visitData} />
+              <MiniArea color="#975FE4" data={visitData}/>
             </ChartCard>
           </Col>
           <Col {...topColResponsiveProps}>
@@ -331,17 +323,17 @@ class Analysis2 extends Component {
               action={
                 <Tooltip
                   title={
-                    <FormattedMessage id="app.analysis.introduce" defaultMessage="Introduce" />
+                    <FormattedMessage id="app.analysis.introduce" defaultMessage="Introduce"/>
                   }
                 >
-                  <Icon type="info-circle-o" />
+                  <Icon type="info-circle-o"/>
                 </Tooltip>
               }
               total={'96.6%'}
-              footer={<Field label={'10月较上个月合格率高'} value="8%" />}
+              footer={<Field label={'10月较上个月合格率高'} value="8%"/>}
               contentHeight={46}
             >
-              <MiniBar data={visitData} />
+              <MiniBar data={visitData}/>
             </ChartCard>
           </Col>
           <Col {...topColResponsiveProps}>
@@ -351,23 +343,23 @@ class Analysis2 extends Component {
               action={
                 <Tooltip
                   title={
-                    <FormattedMessage id="app.analysis.introduce" defaultMessage="introduce" />
+                    <FormattedMessage id="app.analysis.introduce" defaultMessage="introduce"/>
                   }
                 >
-                  <Icon type="info-circle-o" />
+                  <Icon type="info-circle-o"/>
                 </Tooltip>
               }
               loading={loading}
               total={'82.6%'}
-              footer={<Field label={''} value={``} />}
+              footer={<Field label={''} value={``}/>}
               contentHeight={46}
             >
-              <Trend flag="up" style={{ marginRight: 16 }}>
-                <FormattedMessage id="app.analysis.week" defaultMessage="Weekly Changes" />
+              <Trend flag="up" style={{marginRight: 16}}>
+                <FormattedMessage id="app.analysis.week" defaultMessage="Weekly Changes"/>
                 <span className={styles.trendText}>12%</span>
               </Trend>
               <Trend flag="down">
-                <FormattedMessage id="app.analysis.day" defaultMessage="Daily Changes" />
+                <FormattedMessage id="app.analysis.day" defaultMessage="Daily Changes"/>
                 <span className={styles.trendText}>11%</span>
               </Trend>
             </ChartCard>
@@ -381,21 +373,21 @@ class Analysis2 extends Component {
               action={
                 <Tooltip
                   title={
-                    <FormattedMessage id="app.analysis.introduce" defaultMessage="introduce" />
+                    <FormattedMessage id="app.analysis.introduce" defaultMessage="introduce"/>
                   }
                 >
-                  <Icon type="info-circle-o" />
+                  <Icon type="info-circle-o"/>
                 </Tooltip>
               }
               total="74/89"
               footer={
-                <div style={{ whiteSpace: 'nowrap', overflow: 'hidden' }}>
+                <div style={{whiteSpace: 'nowrap', overflow: 'hidden'}}>
                   日同比 :{' '}
                   <Trend flag="down">
                     在线
                     <span className={styles.trendText}>5</span>
                   </Trend>
-                  <Trend flag="up" style={{ marginRight: 16 }}>
+                  <Trend flag="up" style={{marginRight: 16}}>
                     总数
                     <span className={styles.trendText}>4</span>
                   </Trend>
@@ -403,19 +395,19 @@ class Analysis2 extends Component {
               }
               contentHeight={46}
             >
-              <MiniProgress percent={78} strokeWidth={8} target={80} color="#13C2C2" />
+              <MiniProgress percent={78} strokeWidth={8} target={80} color="#13C2C2"/>
             </ChartCard>
           </Col>
         </Row>
 
-        <Card loading={loading} bordered={false} bodyStyle={{ padding: 0 }}>
+        <Card loading={loading} bordered={false} bodyStyle={{padding: 0}}>
           <div className={styles.salesCard}>
-            <Tabs tabBarExtraContent={salesExtra} size="large" tabBarStyle={{ marginBottom: 24 }}>
+            <Tabs tabBarExtraContent={salesExtra} size="large" tabBarStyle={{marginBottom: 24}}>
               <TabPane tab={'土壤平均湿度'} key="sales">
                 <Row>
                   <Col xl={16} lg={12} md={12} sm={24} xs={24}>
                     <div className={styles.salesBar}>
-                      <Bar height={295} title={'土壤平均湿度(%)'} data={salesData} />
+                      <Bar height={295} title={'土壤平均湿度(%)'} data={salesData}/>
                     </div>
                   </Col>
                   <Col xl={8} lg={12} md={12} sm={24} xs={24}>
@@ -427,7 +419,7 @@ class Analysis2 extends Component {
                             <span
                               className={`${styles.rankingItemNumber} ${
                                 i < 3 ? styles.active : ''
-                              }`}
+                                }`}
                             >
                               {i + 1}
                             </span>
@@ -448,7 +440,7 @@ class Analysis2 extends Component {
                 <Row>
                   <Col xl={16} lg={12} md={12} sm={24} xs={24}>
                     <div className={styles.salesBar}>
-                      <Bar height={292} title={'土壤平均温度(℃)'} data={tempData} />
+                      <Bar height={292} title={'土壤平均温度(℃)'} data={tempData}/>
                     </div>
                   </Col>
                   <Col xl={8} lg={12} md={12} sm={24} xs={24}>
@@ -460,7 +452,7 @@ class Analysis2 extends Component {
                             <span
                               className={`${styles.rankingItemNumber} ${
                                 i < 3 ? styles.active : ''
-                              }`}
+                                }`}
                             >
                               {i + 1}
                             </span>
@@ -482,13 +474,13 @@ class Analysis2 extends Component {
           loading={loading}
           className={styles.offlineCard}
           bordered={false}
-          bodyStyle={{ padding: '0 0 32px 0' }}
-          style={{ marginTop: 32 }}
+          bodyStyle={{padding: '0 0 32px 0'}}
+          style={{marginTop: 32}}
         >
           <Tabs activeKey={activeKey} onChange={this.handleTabChange}>
             {offlineData.map(shop => (
-              <TabPane tab={<CustomTab data={shop} currentTabKey={activeKey} />} key={shop.name}>
-                <div style={{ padding: '0 24px' }}>
+              <TabPane tab={<CustomTab data={shop} currentTabKey={activeKey}/>} key={shop.name}>
+                <div style={{padding: '0 24px'}}>
                   <TimelineChart
                     height={400}
                     data={offlineChartData}
