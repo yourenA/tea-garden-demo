@@ -339,7 +339,7 @@ class Analysis2 extends Component {
           <Col {...topColResponsiveProps}>
             <ChartCard
               bordered={false}
-              title={'所有采集器上传率'}
+              title={'茶园设备健康状况'}
               action={
                 <Tooltip
                   title={
@@ -350,17 +350,13 @@ class Analysis2 extends Component {
                 </Tooltip>
               }
               loading={loading}
-              total={'82.6%'}
+              total={'优秀'}
               footer={<Field label={''} value={``}/>}
               contentHeight={46}
             >
               <Trend flag="up" style={{marginRight: 16}}>
-                <FormattedMessage id="app.analysis.week" defaultMessage="Weekly Changes"/>
-                <span className={styles.trendText}>12%</span>
-              </Trend>
-              <Trend flag="down">
-                <FormattedMessage id="app.analysis.day" defaultMessage="Daily Changes"/>
-                <span className={styles.trendText}>11%</span>
+                昨日设备健康状况
+                <span className={styles.trendText}>良好</span>
               </Trend>
             </ChartCard>
           </Col>
