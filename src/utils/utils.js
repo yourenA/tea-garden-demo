@@ -2,6 +2,7 @@ import moment from 'moment';
 import React from 'react';
 import nzh from 'nzh/cn';
 import { parse, stringify } from 'qs';
+import {message, Badge, Tooltip} from 'antd'
 
 export function fixedZero(val) {
   return val * 1 < 10 ? `0${val}` : val;
@@ -176,6 +177,30 @@ export function formatWan(val) {
     );
   }
   return result;
+}
+
+
+export function converErrorCodeToMsg(error) {
+  console.log("error", error.toString())
+  if (error.toString() === 'Error: Network Error') {
+    message.error('网络错误', 3);
+    return false
+  }
+  if (error.response.status === 401) {
+    // message.error(messageJson['token fail']);
+    // removeLoginStorage();
+    // setTimeout(function () {
+    //   window.location.reload()
+    // },1000)
+  } else if (!error.response.data.errors) {
+    message.error(error.response.data.message);
+  } else if (error.response.status === 422) {
+    let first;
+    for (first in error.response.data.errors) break;
+    message.error(`${error.response.data.errors[first][0]}`);
+  } else {
+    message.error('未知错误');
+  }
 }
 
 export function isAntdPro() {

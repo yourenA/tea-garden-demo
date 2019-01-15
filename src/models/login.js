@@ -14,15 +14,16 @@ export default {
 
   effects: {
     *login({ payload }, { call, put }) {
-       let response={}
-      const { password, userName, type } = payload;
-      if (password === '123456' && userName === 'admin') {
+      console.log('payload',payload)
+      let response = yield call(fakeAccountLogin, payload);
+      const { password, username, type } = payload;
+      if (password === '123456' && username === 'admin') {
         response={
           status: 'ok',
           type,
           currentAuthority: 'admin',
         }
-      }else if (password === '123456' && userName === 'user') {
+      }else if (password === '123456' && username === 'user') {
         response={
           status: 'ok',
           type,
