@@ -139,19 +139,6 @@ class BaseView extends Component {
                 </Select>
               )}
             </FormItem>
-            <FormItem label={formatMessage({ id: 'app.settings.basic.geographic' })}>
-              {getFieldDecorator('geographic', {
-                rules: [
-                  {
-                    required: true,
-                    message: formatMessage({ id: 'app.settings.basic.geographic-message' }, {}),
-                  },
-                  {
-                    validator: validatorGeographic,
-                  },
-                ],
-              })(<GeographicView />)}
-            </FormItem>
             <FormItem label={formatMessage({ id: 'app.settings.basic.address' })}>
               {getFieldDecorator('address', {
                 rules: [

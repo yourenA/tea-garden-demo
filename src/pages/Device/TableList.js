@@ -1,6 +1,7 @@
 import React, { PureComponent, Fragment } from 'react';
 import { connect } from 'dva';
 import moment from 'moment';
+import { Link } from 'dva/router';
 import {
   Row,
   Col,
@@ -50,7 +51,7 @@ const CreateForm = Form.create()(props => {
   return (
     <Modal
       destroyOnClose
-      title="新建传感器"
+      title="新建设备"
       visible={modalVisible}
       onOk={okHandle}
       onCancel={() => handleModalVisible()}
@@ -283,12 +284,8 @@ class TableList extends PureComponent {
 
   columns = [
     {
-      title: '传感器名称',
+      title: '设备名称',
       dataIndex: 'name',
-    },
-    {
-      title: '所属茶园',
-      dataIndex: 'desc',
     },
     {
       title: '上传次数',
@@ -335,9 +332,9 @@ class TableList extends PureComponent {
       render: (text, record) => (
         <Fragment>
           {/*<a onClick={() => this.handleUpdateModalVisible(true, record)}>配置</a>*/}
-          <a href="javascript:;">配置</a>
+          <Link to={`/monitor/devices/info?id=${record.name}`}>配置</Link>
           <Divider type="vertical" />
-          <a href="javascript:;">订阅警报</a>
+          <Link to={`/monitor/devices/info?id=${record.name}`}>订阅警报</Link>
         </Fragment>
       ),
     },
@@ -464,12 +461,12 @@ class TableList extends PureComponent {
 
   handleAdd = fields => {
     const { dispatch } = this.props;
-    dispatch({
-      type: 'rule/add',
-      payload: {
-        name: fields.desc,
-      },
-    });
+    // dispatch({
+    //   type: 'rule/add',
+    //   payload: {
+    //     name: fields.desc,
+    //   },
+    // });
 
     message.success('添加成功');
     this.handleModalVisible();
@@ -498,18 +495,14 @@ class TableList extends PureComponent {
       <Form onSubmit={this.handleSearch} layout="inline">
         <Row gutter={{ md: 8, lg: 24, xl: 48 }}>
           <Col md={8} sm={24}>
-            <FormItem label="传感器名称">
+            <FormItem label="设备名称">
               {getFieldDecorator('name')(<Input placeholder="请输入" />)}
             </FormItem>
           </Col>
           <Col md={8} sm={24}>
-            <FormItem label="所属茶园">
-              {getFieldDecorator('status')(
-                <Select placeholder="请选择" style={{ width: '100%' }}>
-                  <Option value="0">茶园1</Option>
-                  <Option value="1">茶园2</Option>
-                  <Option value="3">茶园3</Option>
-                </Select>
+            <FormItem label="上传日期">
+              {getFieldDecorator('date')(
+                <DatePicker style={{ width: '100%' }} placeholder="请输入更新日期" />
               )}
             </FormItem>
           </Col>
@@ -539,18 +532,14 @@ class TableList extends PureComponent {
       <Form onSubmit={this.handleSearch} layout="inline">
         <Row gutter={{ md: 8, lg: 24, xl: 48 }}>
           <Col md={8} sm={24}>
-            <FormItem label="传感器名称">
+            <FormItem label="设备名称">
               {getFieldDecorator('name')(<Input placeholder="请输入" />)}
             </FormItem>
           </Col>
           <Col md={8} sm={24}>
-            <FormItem label="所属茶园">
-              {getFieldDecorator('status')(
-                <Select placeholder="请选择" style={{ width: '100%' }}>
-                  <Option value="0">茶园1</Option>
-                  <Option value="1">茶园2</Option>
-                  <Option value="3">茶园3</Option>
-                </Select>
+            <FormItem label="上传日期">
+              {getFieldDecorator('date')(
+                <DatePicker style={{ width: '100%' }} placeholder="请输入更新日期" />
               )}
             </FormItem>
           </Col>
@@ -561,13 +550,7 @@ class TableList extends PureComponent {
           </Col>
         </Row>
         <Row gutter={{ md: 8, lg: 24, xl: 48 }}>
-          <Col md={8} sm={24}>
-            <FormItem label="上传日期">
-              {getFieldDecorator('date')(
-                <DatePicker style={{ width: '100%' }} placeholder="请输入更新日期" />
-              )}
-            </FormItem>
-          </Col>
+
           <Col md={8} sm={24}>
             <FormItem label="使用状态">
               {getFieldDecorator('status3')(
@@ -639,7 +622,7 @@ class TableList extends PureComponent {
             <div className={styles.tableListForm}>{this.renderForm()}</div>
             <div className={styles.tableListOperator}>
               <Button icon="plus" type="primary" onClick={() => this.handleModalVisible(true)}>
-                新建传感器
+                新建设备
               </Button>
               {selectedRows.length > 0 && (
                 <span>

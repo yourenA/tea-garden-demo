@@ -23,100 +23,67 @@ export default [
     authority: ['admin', 'user'],
     routes: [
       // dashboard
-      { path: '/', redirect: '/monitor/analysis' },
+      { path: '/', redirect: '/home/index' },
       {
-        path: '/monitor',
-        name: '监控信息',
-        icon: 'dashboard',
+        path: '/home',
+        name: '系统整体信息',
+        icon: 'home',
         routes: [
           {
-            path: '/monitor/analysis',
-            name: '系统整体信息',
+            path: '/home/index',
+
+            name: '首页',
             component: './Monitor/Analysis',
           },
-          {
-            path: '/monitor/map',
-            name: '地图信息',
-            component: './Monitor/Monitor',
-          },
-          {
-            path: '/monitor/workplace',
-            name: '视频监控',
-            component: './Monitor/Workplace',
-          },
-        ],
+          ]
       },
+
       {
-        path: '/device',
-        name: '茶园管理',
+        path: '/monitor',
+        name: '设备信息',
+
         icon: 'dashboard',
         routes: [
           {
-            path: '/device/tea-garden',
-            name: '茶园基本信息',
-            component: './Device/BasicList',
-          },
-          {
-            path: '/device/search',
-            name: '传感器管理',
-            component: './Device/List',
+            path: '/monitor/devices',
+            name: '设备管理',
+            component: './Forms/StepForm',
+            hideChildrenInMenu: true,
             routes: [
               {
-                path: '/device/search',
-                redirect: '/device/search/temperature',
+                path: '/monitor/devices',
+                name: '设备管理',
+                redirect: '/monitor/devices/list',
               },
               {
-                path: '/device/search/temperature',
-                name: '温度传感器',
+                path: '/monitor/devices/list',
+                name: '设备列表',
                 component: './Device/TableList',
               },
               {
-                path: '/device/search/humidity',
-                name: '湿度传感器',
-                component: './Device/TableList',
+                path: '/monitor/devices/info',
+                name: '设备信息',
+                component: './Device/DeviceInfo',
               },
             ],
           },
-          {
-            path: '/device/workplace',
-            name: '视频摄像头管理',
-            component: './Device/Applications',
-          },
+          // {
+          //   path: '/monitor/map',
+          //   name: '地图信息',
+          //   component: './Monitor/Monitor',
+          // },
+          // {
+          //   path: '/monitor/workplace',
+          //   name: '视频监控',
+          //   component: './Monitor/Workplace',
+          // },
         ],
       },
       /* {
-        path: '/dashboard',
-        name: 'dashboard',
-        icon: 'dashboard',
-        routes: [
-          {
-            path: '/dashboard/analysis',
-            name: 'analysis',
-            component: './Dashboard/Analysis',
-          },
-          {
-            path: '/dashboard/monitor',
-            name: 'monitor',
-            component: './Dashboard/Monitor',
-          },
-          {
-            path: '/dashboard/workplace',
-            name: 'workplace',
-            component: './Dashboard/Workplace',
-          },
-        ],
-      },
-      // forms
-      {
         path: '/form',
         icon: 'form',
         name: 'form',
         routes: [
-          {
-            path: '/form/basic-form',
-            name: 'basicform',
-            component: './Forms/BasicForm',
-          },
           {
             path: '/form/step-form',
             name: 'stepform',
@@ -283,14 +250,6 @@ export default [
               {
                 path: '/account/settings/security',
                 component: './Account/Settings/SecurityView',
-              },
-              {
-                path: '/account/settings/binding',
-                component: './Account/Settings/BindingView',
-              },
-              {
-                path: '/account/settings/notification',
-                component: './Account/Settings/NotificationView',
               },
             ],
           },

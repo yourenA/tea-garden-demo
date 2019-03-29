@@ -11,7 +11,7 @@ for (let i = 0; i < 46; i += 1) {
       'https://gw.alipayobjects.com/zos/rmsportal/eeHMaZBwmTvLdIwMfBpg.png',
       'https://gw.alipayobjects.com/zos/rmsportal/udxAbMEhpwthVVcjLXik.png',
     ][i % 2],
-    name: `传感器 ${i}`,
+    name: `设备 ${i}`,
     title: `一个任务名称 ${i}`,
     owner: '曲丽丽',
     desc: `茶园${Math.floor(Math.random() * 10) % 4}`,

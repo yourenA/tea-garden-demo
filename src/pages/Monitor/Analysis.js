@@ -97,7 +97,7 @@ class Analysis2 extends Component {
     const fakeY = [80, 90, 80, 60, 80, 99, 99, 96, 98, 99, 87, 85, 97];
     for (let i = 0; i < fakeY.length; i += 1) {
       visitData.push({
-        x: moment(new Date(beginDay + 1000 * 60 * 60 * 24 * i)).format('YYYY-MM-DD'),
+        x: moment(new Date(beginDay -(1000 * 60 * 60 * 24*fakeY.length) + 1000 * 60 * 60 * 24 * i)).format('YYYY-MM-DD'),
         y: fakeY[i],
       });
     }
@@ -173,9 +173,9 @@ class Analysis2 extends Component {
       rangePickerValue: getTimeDistance(type),
     });
 
-    dispatch({
-      type: 'chart/fetchSalesData',
-    });
+    // dispatch({
+    //   type: 'chart/fetchSalesData',
+    // });
   };
 
   isActive(type) {
@@ -237,11 +237,11 @@ class Analysis2 extends Component {
           style={{width: 256}}
         />
         <Select defaultValue="1" style={{width: 120, marginLeft: '12px'}}>
-          <Option value="1">一号茶园</Option>
-          <Option value="2">二号茶园</Option>
-          <Option value="3">三号茶园</Option>
-          <Option value="4">四号茶园</Option>
-          <Option value="5">五号茶园</Option>
+          <Option value="1">一号设备</Option>
+          <Option value="2">二号设备</Option>
+          <Option value="3">三号设备</Option>
+          <Option value="4">四号设备</Option>
+          <Option value="5">五号设备</Option>
         </Select>
       </div>
     );
@@ -312,14 +312,14 @@ class Analysis2 extends Component {
               }
               contentHeight={46}
             >
-              <MiniArea color="#975FE4" data={visitData}/>
+              <MiniArea color="#13C2C2" data={visitData}/>
             </ChartCard>
           </Col>
           <Col {...topColResponsiveProps}>
             <ChartCard
               bordered={false}
               loading={loading}
-              title={'茶园平均合格率'}
+              title={'设备总体合格率'}
               action={
                 <Tooltip
                   title={
@@ -330,7 +330,7 @@ class Analysis2 extends Component {
                 </Tooltip>
               }
               total={'96.6%'}
-              footer={<Field label={'10月较上个月合格率高'} value="8%"/>}
+              footer={<Field label={'较上个月合格率高'} value="8%"/>}
               contentHeight={46}
             >
               <MiniBar data={visitData}/>
@@ -339,7 +339,7 @@ class Analysis2 extends Component {
           <Col {...topColResponsiveProps}>
             <ChartCard
               bordered={false}
-              title={'茶园设备健康状况'}
+              title={'今天设备健康状况'}
               action={
                 <Tooltip
                   title={
@@ -365,7 +365,7 @@ class Analysis2 extends Component {
             <ChartCard
               loading={loading}
               bordered={false}
-              title={'视频监控在线/总数'}
+              title={'设备在线/总数'}
               action={
                 <Tooltip
                   title={
@@ -399,95 +399,26 @@ class Analysis2 extends Component {
         <Card loading={loading} bordered={false} bodyStyle={{padding: 0}}>
           <div className={styles.salesCard}>
             <Tabs tabBarExtraContent={salesExtra} size="large" tabBarStyle={{marginBottom: 24}}>
-              <TabPane tab={'土壤平均湿度'} key="sales">
+              <TabPane tab={'设备在线率'} key="sales">
                 <Row>
-                  <Col xl={16} lg={12} md={12} sm={24} xs={24}>
+                  <Col xl={24} lg={24} md={24} sm={24} xs={24}>
                     <div className={styles.salesBar}>
-                      <Bar height={295} title={'土壤平均湿度(%)'} data={salesData}/>
-                    </div>
-                  </Col>
-                  <Col xl={8} lg={12} md={12} sm={24} xs={24}>
-                    <div className={styles.salesRank}>
-                      <h4 className={styles.rankingTitle}>湿度排行</h4>
-                      <ul className={styles.rankingList}>
-                        {salesDataRankingListData.slice(0, 7).map((item, i) => (
-                          <li key={item.x}>
-                            <span
-                              className={`${styles.rankingItemNumber} ${
-                                i < 3 ? styles.active : ''
-                                }`}
-                            >
-                              {i + 1}
-                            </span>
-                            <span className={styles.rankingItemTitle} title={item.x}>
-                              {item.x}
-                            </span>
-                            <span className={styles.rankingItemValue}>
-                              {numeral(item.y).format('0,0')} ℃
-                            </span>
-                          </li>
-                        ))}
-                      </ul>
+                      <Bar height={295} title={'设备在线率(%)'} data={salesData}/>
                     </div>
                   </Col>
                 </Row>
               </TabPane>
-              <TabPane tab={'土壤平均温度'} key="views">
+              <TabPane tab={'设备上传率'} key="views">
                 <Row>
-                  <Col xl={16} lg={12} md={12} sm={24} xs={24}>
+                  <Col xl={24} lg={24} md={12} sm={24} xs={24}>
                     <div className={styles.salesBar}>
-                      <Bar height={292} title={'土壤平均温度(℃)'} data={tempData}/>
-                    </div>
-                  </Col>
-                  <Col xl={8} lg={12} md={12} sm={24} xs={24}>
-                    <div className={styles.salesRank}>
-                      <h4 className={styles.rankingTitle}>湿度排行</h4>
-                      <ul className={styles.rankingList}>
-                        {tempDataRankingListData.slice(0, 7).map((item, i) => (
-                          <li key={item.x}>
-                            <span
-                              className={`${styles.rankingItemNumber} ${
-                                i < 3 ? styles.active : ''
-                                }`}
-                            >
-                              {i + 1}
-                            </span>
-                            <span className={styles.rankingItemTitle} title={item.x}>
-                              {item.x}
-                            </span>
-                            <span>{numeral(item.y).format('0,0')} %</span>
-                          </li>
-                        ))}
-                      </ul>
+                      <Bar height={292} title={'设备上传率(℃)'} data={tempData}/>
                     </div>
                   </Col>
                 </Row>
               </TabPane>
             </Tabs>
           </div>
-        </Card>
-        <Card
-          loading={loading}
-          className={styles.offlineCard}
-          bordered={false}
-          bodyStyle={{padding: '0 0 32px 0'}}
-          style={{marginTop: 32}}
-        >
-          <Tabs activeKey={activeKey} onChange={this.handleTabChange}>
-            {offlineData.map(shop => (
-              <TabPane tab={<CustomTab data={shop} currentTabKey={activeKey}/>} key={shop.name}>
-                <div style={{padding: '0 24px'}}>
-                  <TimelineChart
-                    height={400}
-                    data={offlineChartData}
-                    titleMap={{
-                      y1: '上传率',
-                    }}
-                  />
-                </div>
-              </TabPane>
-            ))}
-          </Tabs>
         </Card>
       </GridContent>
     );

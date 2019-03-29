@@ -20,7 +20,7 @@ export default {
       // const response = yield call(queryCurrent);
       const response= {
         name: 'amwares',
-        avatar: 'http://api.web.amwares.com/images/baseInfo/d542ea7be89424f0391ce53a8ae1f9ec',
+        avatar: 'https://gw.alipayobjects.com/zos/rmsportal/ZiESqWwCXBRQoaPONSJe.png',
         userid: '00000001',
         email: 'amwares@163.com',
         signature: '海纳百川，有容乃大',

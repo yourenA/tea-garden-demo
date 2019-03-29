@@ -3,9 +3,9 @@ import { formatMessage } from 'umi/locale';
 import Link from 'umi/link';
 import { Icon } from 'antd';
 import GlobalFooter from '@/components/GlobalFooter';
-import SelectLang from '@/components/SelectLang';
+// import SelectLang from '@/components/SelectLang';
 import styles from './UserLayout.less';
-import logo from '../images/tea-icon.png';
+import logo from '../images/zhuhua.png';
 
 const links = [
   {
@@ -27,7 +27,7 @@ const links = [
 
 const copyright = (
   <Fragment>
-    Copyright <Icon type="copyright" /> 2018 广州辂轺信息科技有限公司出品
+    Copyright <Icon type="copyright" /> 2019 广州辂轺信息科技有限公司出品
   </Fragment>
 );
 
@@ -56,10 +56,10 @@ class UserLayout extends React.PureComponent {
             <div className={styles.header}>
               <Link to="/">
                 <img alt="logo" className={styles.logo} src={logo} />
-                <span className={styles.title}>广州辂轺茶园监控系统</span>
+                <span className={styles.title}>南方阀门智慧产品设备数据平台</span>
               </Link>
             </div>
-            <div className={styles.desc}>集茶园设备管理数据分析于一体</div>
+            <div className={styles.desc}>集设备管理数据分析于一体</div>
           </div>
           {children}
         </div>
