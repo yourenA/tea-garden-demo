@@ -47,7 +47,7 @@ export default [
           {
             path: '/monitor/devices',
             name: '设备管理',
-            component: './Forms/StepForm',
+            // component: './Forms/StepForm',
             hideChildrenInMenu: true,
             routes: [
               {

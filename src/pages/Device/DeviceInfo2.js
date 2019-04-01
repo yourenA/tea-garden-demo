@@ -1,7 +1,7 @@
 import React, {PureComponent} from 'react';
 import moment from 'moment';
 import {connect} from 'dva';
-import {Row, Col, Form, Card, Select, Input, Table, Modal, Divider, Transfer} from 'antd';
+import {Row, Col, Form, Card, Select, Input, Table, Modal, Divider, PageHeader} from 'antd';
 import {Collapse, Button} from 'antd';
 
 const Panel = Collapse.Panel;
@@ -286,14 +286,15 @@ class CoverCardList extends PureComponent {
     const {targetKeys, selectedKeys, disabled} = this.state;
     return (
       <div>
-
-        <Card bordered={false}>
+        <PageHeader
+          style={{ margin: '-24px -24px 0' }}
+          onBack={() => this.props.history.goBack()}
+          title="设置"
+        />
+        <Card bordered={false} style={{marginTop:'24px'}}>
           <Collapse activeKey={['2']}>
             <Panel showArrow={false} header="设备参数设置" key="2"
-                   extra={ <Button size="small" type="primary" icon='setting' onClick={()=> {
-                     this.showVisible2(true)
-                   }
-                   }>维护</Button>}>
+                   >
               <div>
                 <Row gutter={12}>
                   <Col xl={6} lg={6} md={12} sm={24} xs={24} style={{marginBottom: 12}}>
@@ -307,14 +308,14 @@ class CoverCardList extends PureComponent {
                         padding: '0',
                       }}
                       title={
-                        "球阀操作"
+                        "阀1"
                       }
                     >
-                      <Table size="small" columns={setColumns} dataSource={setDate} bordered={true} pagination={false}/>
+                     {/* <Table size="small" columns={setColumns} dataSource={setDate} bordered={true} pagination={false}/>*/}
                     </Card>
                     <div style={{textAlign: 'center', marginTop: '12px'}}>
-                      <Button size="small" type="primary" icon='setting' onClick={()=>this.showVisible3(true)}>操作一</Button>
-                      <Button size="small" type="primary" icon='setting'  onClick={()=>this.showVisible3(true)}style={{marginLeft: '6px'}}>操作二</Button>
+                      <Button size="small" type="primary" icon='setting' >开阀</Button>
+                      <Button size="small" type="danger" icon='setting' style={{marginLeft: '6px'}}>关阀</Button>
                     </div>
                   </Col>
                   <Col xl={6} lg={6} md={12} sm={24} xs={24} style={{marginBottom: 12}}>
@@ -328,13 +329,14 @@ class CoverCardList extends PureComponent {
                         padding: '0',
                       }}
                       title={
-                        "前后压力设置"
+                        "阀2"
                       }
                     >
-                      <Table size="small" columns={setColumns} dataSource={setDate} bordered={true} pagination={false}/>
+                    {/*  <Table size="small" columns={setColumns} dataSource={setDate} bordered={true} pagination={false}/>*/}
                     </Card>
                     <div style={{textAlign: 'center', marginTop: '12px'}}>
-                      <Button size="small" type="primary" icon='setting' onClick={()=>this.showVisible3(true)}>操作一</Button>
+                      <Button size="small" type="primary" icon='setting' >开阀</Button>
+                      <Button size="small" type="danger" icon='setting' style={{marginLeft: '6px'}} >关阀</Button>
                     </div>
                   </Col>
                   <Col xl={6} lg={6} md={12} sm={24} xs={24} style={{marginBottom: 12}}>
@@ -348,13 +350,14 @@ class CoverCardList extends PureComponent {
                         padding: '0',
                       }}
                       title={
-                        "流量设置"
+                        "阀3"
                       }
                     >
-                      <Table size="small" columns={setColumns} dataSource={setDate} bordered={true} pagination={false}/>
+                      {/*<Table size="small" columns={setColumns} dataSource={setDate} bordered={true} pagination={false}/>*/}
                     </Card>
                     <div style={{textAlign: 'center', marginTop: '12px'}}>
-                      <Button size="small" type="primary" icon='setting' onClick={()=>this.showVisible3(true)}>操作一</Button>
+                      <Button size="small" type="primary" icon='setting' >开阀</Button>
+                      <Button size="small" type="danger" icon='setting' style={{marginLeft: '6px'}}>关阀</Button>
                     </div>
                   </Col>
                   <Col xl={6} lg={6} md={12} sm={24} xs={24} style={{marginBottom: 12}}>
@@ -368,13 +371,14 @@ class CoverCardList extends PureComponent {
                         padding: '0',
                       }}
                       title={
-                        "压力设置"
+                        "阀4"
                       }
                     >
-                      <Table size="small" columns={setColumns} dataSource={setDate} bordered={true} pagination={false}/>
+                      {/*<Table size="small" columns={setColumns} dataSource={setDate} bordered={true} pagination={false}/>*/}
                     </Card>
                     <div style={{textAlign: 'center', marginTop: '12px'}}>
-                      <Button size="small" type="primary" icon='setting' onClick={()=>this.showVisible3(true)}>操作一</Button>
+                      <Button size="small" type="primary" icon='setting' >开阀</Button>
+                      <Button size="small" type="danger" icon='setting' style={{marginLeft: '6px'}} >关阀</Button>
                     </div>
                   </Col>
                 </Row>

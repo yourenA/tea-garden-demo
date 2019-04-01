@@ -1,9 +1,9 @@
 import React, {PureComponent} from 'react';
 import moment from 'moment';
 import {connect} from 'dva';
-import {Row, Col, Form, Card, Select, Input, Table, Modal, Divider, Transfer} from 'antd';
+import {Row, Col, Form, Card, Select, Input, Table, Modal, Divider, Transfer,PageHeader} from 'antd';
 import {Collapse, Button} from 'antd';
-
+import { routerRedux } from 'dva/router';
 const Panel = Collapse.Panel;
 import TagSelect from '@/components/TagSelect';
 import AvatarList from '@/components/AvatarList';
@@ -574,8 +574,12 @@ class CoverCardList extends PureComponent {
     const {targetKeys, selectedKeys, disabled} = this.state;
     return (
       <div>
-
-        <Card bordered={false}>
+        <PageHeader
+          style={{ margin: '-24px -24px 0' }}
+          onBack={() => this.props.history.goBack()}
+          title="实时数据"
+        />
+        <Card bordered={false} style={{marginTop:'24px'}}>
           <Collapse activeKey={['1']}>
             <Panel showArrow={false} header="设备数据采集" key="1"
                    extra={ <Button size="small" type="primary" icon='setting' onClick={()=> {

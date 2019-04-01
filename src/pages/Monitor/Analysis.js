@@ -315,7 +315,7 @@ class Analysis2 extends Component {
               <MiniArea color="#13C2C2" data={visitData}/>
             </ChartCard>
           </Col>
-          <Col {...topColResponsiveProps}>
+         {/* <Col {...topColResponsiveProps}>
             <ChartCard
               bordered={false}
               loading={loading}
@@ -335,31 +335,7 @@ class Analysis2 extends Component {
             >
               <MiniBar data={visitData}/>
             </ChartCard>
-          </Col>
-          <Col {...topColResponsiveProps}>
-            <ChartCard
-              bordered={false}
-              title={'今天设备健康状况'}
-              action={
-                <Tooltip
-                  title={
-                    <FormattedMessage id="app.analysis.introduce" defaultMessage="introduce"/>
-                  }
-                >
-                  <Icon type="info-circle-o"/>
-                </Tooltip>
-              }
-              loading={loading}
-              total={'优秀'}
-              footer={<Field label={''} value={``}/>}
-              contentHeight={46}
-            >
-              <Trend flag="up" style={{marginRight: 16}}>
-                昨日设备健康状况
-                <span className={styles.trendText}>良好</span>
-              </Trend>
-            </ChartCard>
-          </Col>
+          </Col>*/}
 
           <Col {...topColResponsiveProps}>
             <ChartCard
@@ -396,7 +372,7 @@ class Analysis2 extends Component {
           </Col>
         </Row>
 
-        <Card loading={loading} bordered={false} bodyStyle={{padding: 0}}>
+      {/*  <Card loading={loading} bordered={false} bodyStyle={{padding: 0}}>
           <div className={styles.salesCard}>
             <Tabs tabBarExtraContent={salesExtra} size="large" tabBarStyle={{marginBottom: 24}}>
               <TabPane tab={'设备在线率'} key="sales">
@@ -419,7 +395,7 @@ class Analysis2 extends Component {
               </TabPane>
             </Tabs>
           </div>
-        </Card>
+        </Card>*/}
       </GridContent>
     );
   }

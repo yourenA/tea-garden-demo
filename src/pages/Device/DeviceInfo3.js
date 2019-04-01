@@ -1,7 +1,7 @@
 import React, {PureComponent} from 'react';
 import moment from 'moment';
 import {connect} from 'dva';
-import {Row, Col, Form, Card, Select, Input, Table, Modal, Divider, Transfer} from 'antd';
+import {Row, Col, Form, Card, Select, Input, Table, Modal, Divider, PageHeader} from 'antd';
 import {Collapse, Button} from 'antd';
 import { DatePicker } from 'antd';
 const Panel = Collapse.Panel;
@@ -574,8 +574,12 @@ class CoverCardList extends PureComponent {
     const {targetKeys, selectedKeys, disabled} = this.state;
     return (
       <div>
-
-        <Card bordered={false}>
+        <PageHeader
+          style={{ margin: '-24px -24px 0' }}
+          onBack={() => this.props.history.goBack()}
+          title="历史数据"
+        />
+        <Card bordered={false} style={{marginTop:'24px'}}>
           <Collapse activeKey={['1']}>
             <Panel showArrow={false} header={<div>设备历史数据 <DatePicker  defaultValue={moment()}/></div>} key="1"
                    >
