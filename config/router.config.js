@@ -62,8 +62,18 @@ export default [
               },
               {
                 path: '/monitor/devices/info',
-                name: '设备信息',
+                name: '设备实时数据',
                 component: './Device/DeviceInfo',
+              },
+              {
+                path: '/monitor/devices/setting',
+                name: '设备配置',
+                component: './Device/DeviceInfo2',
+              },
+              {
+                path: '/monitor/devices/history',
+                name: '设备历史数据',
+                component: './Device/DeviceInfo3',
               },
             ],
           },
@@ -246,10 +256,6 @@ export default [
               {
                 path: '/account/settings/base',
                 component: './Account/Settings/BaseView',
-              },
-              {
-                path: '/account/settings/security',
-                component: './Account/Settings/SecurityView',
               },
             ],
           },

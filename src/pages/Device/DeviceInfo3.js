@@ -3,7 +3,7 @@ import moment from 'moment';
 import {connect} from 'dva';
 import {Row, Col, Form, Card, Select, Input, Table, Modal, Divider, Transfer} from 'antd';
 import {Collapse, Button} from 'antd';
-
+import { DatePicker } from 'antd';
 const Panel = Collapse.Panel;
 import TagSelect from '@/components/TagSelect';
 import AvatarList from '@/components/AvatarList';
@@ -577,13 +577,10 @@ class CoverCardList extends PureComponent {
 
         <Card bordered={false}>
           <Collapse activeKey={['1']}>
-            <Panel showArrow={false} header="设备数据采集" key="1"
-                   extra={ <Button size="small" type="primary" icon='setting' onClick={()=> {
-                     this.showVisible(true)
-                   }
-                   }>视图</Button>}>
+            <Panel showArrow={false} header={<div>设备历史数据 <DatePicker  defaultValue={moment()}/></div>} key="1"
+                   >
               <div><Row gutter={12}>
-                <Col xl={12} lg={24} md={24} sm={24} xs={24} style={{marginBottom: 12}}>
+                <Col span={24} style={{marginBottom: 12}}>
                   <Card
                     hoverable={true}
                     size="small"
@@ -609,7 +606,7 @@ class CoverCardList extends PureComponent {
                     </Row>
                   </Card>
                 </Col>
-                <Col xl={12} lg={24} md={24} sm={24} xs={24} style={{marginBottom: 12}}>
+                <Col span={24} style={{marginBottom: 12}}>
                   <Card
                     hoverable={true}
                     size="small"
@@ -635,7 +632,7 @@ class CoverCardList extends PureComponent {
                     </Row>
                   </Card>
                 </Col>
-                <Col xl={12} lg={24} md={24} sm={24} xs={24} style={{marginBottom: 12}}>
+                <Col  span={24} style={{marginBottom: 12}}>
                   <Card
                     hoverable={true}
                     size="small"
@@ -661,7 +658,7 @@ class CoverCardList extends PureComponent {
                     </Row>
                   </Card>
                 </Col>
-                <Col xl={12} lg={24} md={24} sm={24} xs={24} style={{marginBottom: 12}}>
+                <Col span={24} style={{marginBottom: 12}}>
                   <Card
                     hoverable={true}
                     size="small"
@@ -719,16 +716,6 @@ class CoverCardList extends PureComponent {
             addEditVisible: false
           })}
         >
-          <Transfer
-            dataSource={mockData}
-            titles={['全部', '显示项']}
-            targetKeys={targetKeys}
-            selectedKeys={selectedKeys}
-            onChange={this.handleChange}
-            onSelectChange={this.handleSelectChange}
-
-            render={item => item.title}
-          />
         </Modal>
         <Modal
           title="参数设置维护"

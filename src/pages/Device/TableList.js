@@ -288,15 +288,6 @@ class TableList extends PureComponent {
       dataIndex: 'name',
     },
     {
-      title: '上传次数',
-      dataIndex: 'callNo',
-      // sorter: true,
-      align: 'right',
-      render: val => `${val} 万`,
-      // mark to display a total number
-      // needTotal: true,
-    },
-    {
       title: '状态',
       dataIndex: 'status',
       // filters: [
@@ -322,7 +313,7 @@ class TableList extends PureComponent {
       },
     },
     {
-      title: '上次上传时间',
+      title: '登陆时间',
       dataIndex: 'updatedAt',
       sorter: true,
       render: val => <span>{moment(val).format('YYYY-MM-DD HH:mm:ss')}</span>,
@@ -332,9 +323,11 @@ class TableList extends PureComponent {
       render: (text, record) => (
         <Fragment>
           {/*<a onClick={() => this.handleUpdateModalVisible(true, record)}>配置</a>*/}
-          <Link to={`/monitor/devices/info?id=${record.name}`}>配置</Link>
+          <Link to={`/monitor/devices/info?id=${record.name}`}>实时数据</Link>
           <Divider type="vertical" />
-          <Link to={`/monitor/devices/info?id=${record.name}`}>订阅警报</Link>
+          <Link to={`/monitor/devices/history?id=${record.name}`}>历史数据</Link>
+          <Divider type="vertical" />
+          <Link to={`/monitor/devices/setting?id=${record.name}`}>配置</Link>
         </Fragment>
       ),
     },
@@ -500,7 +493,7 @@ class TableList extends PureComponent {
             </FormItem>
           </Col>
           <Col md={8} sm={24}>
-            <FormItem label="上传日期">
+            <FormItem label="登陆时间">
               {getFieldDecorator('date')(
                 <DatePicker style={{ width: '100%' }} placeholder="请输入更新日期" />
               )}
@@ -537,20 +530,12 @@ class TableList extends PureComponent {
             </FormItem>
           </Col>
           <Col md={8} sm={24}>
-            <FormItem label="上传日期">
+            <FormItem label="登陆时间">
               {getFieldDecorator('date')(
                 <DatePicker style={{ width: '100%' }} placeholder="请输入更新日期" />
               )}
             </FormItem>
           </Col>
-          <Col md={8} sm={24}>
-            <FormItem label="上传次数">
-              {getFieldDecorator('number')(<InputNumber style={{ width: '100%' }} />)}
-            </FormItem>
-          </Col>
-        </Row>
-        <Row gutter={{ md: 8, lg: 24, xl: 48 }}>
-
           <Col md={8} sm={24}>
             <FormItem label="使用状态">
               {getFieldDecorator('status3')(
@@ -561,16 +546,10 @@ class TableList extends PureComponent {
               )}
             </FormItem>
           </Col>
-          <Col md={8} sm={24}>
-            <FormItem label="使用状态">
-              {getFieldDecorator('status4')(
-                <Select placeholder="请选择" style={{ width: '100%' }}>
-                  <Option value="0">关闭</Option>
-                  <Option value="1">运行中</Option>
-                </Select>
-              )}
-            </FormItem>
-          </Col>
+        </Row>
+        <Row gutter={{ md: 8, lg: 24, xl: 48 }}>
+
+
         </Row>
         <div style={{ overflow: 'hidden' }}>
           <div style={{ float: 'right', marginBottom: 24 }}>

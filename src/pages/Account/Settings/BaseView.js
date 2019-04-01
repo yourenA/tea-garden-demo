@@ -125,20 +125,6 @@ class BaseView extends Component {
                 />
               )}
             </FormItem>
-            <FormItem label={formatMessage({ id: 'app.settings.basic.country' })}>
-              {getFieldDecorator('country', {
-                rules: [
-                  {
-                    required: true,
-                    message: formatMessage({ id: 'app.settings.basic.country-message' }, {}),
-                  },
-                ],
-              })(
-                <Select style={{ maxWidth: 220 }}>
-                  <Option value="China">中国</Option>
-                </Select>
-              )}
-            </FormItem>
             <FormItem label={formatMessage({ id: 'app.settings.basic.address' })}>
               {getFieldDecorator('address', {
                 rules: [
@@ -167,9 +153,6 @@ class BaseView extends Component {
               />
             </Button>
           </Form>
-        </div>
-        <div className={styles.right}>
-          <AvatarView avatar={this.getAvatarURL()} />
         </div>
       </div>
     );
