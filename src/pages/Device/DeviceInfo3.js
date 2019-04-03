@@ -574,11 +574,6 @@ class CoverCardList extends PureComponent {
     const {targetKeys, selectedKeys, disabled} = this.state;
     return (
       <div>
-        <PageHeader
-          style={{ margin: '-24px -24px 0' }}
-          onBack={() => this.props.history.goBack()}
-          title="历史数据"
-        />
         <Card bordered={false} style={{marginTop:'24px'}}>
           <Collapse activeKey={['1']}>
             <Panel showArrow={false} header={<div>设备历史数据 <DatePicker  defaultValue={moment()}/></div>} key="1"

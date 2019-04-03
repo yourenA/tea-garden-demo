@@ -9,12 +9,13 @@ import {
   Card,
   Tabs,
   Table,
-  Radio,
+  Statistic,
   DatePicker,
   Tooltip,
   Menu,
-  Dropdown,
+  List,
   Select,
+  Button
 } from 'antd';
 import {
   ChartCard,
@@ -63,6 +64,8 @@ class Analysis2 extends Component {
     }
   }
 
+
+
   state = {
     salesType: 'all',
     currentTabKey: '',
@@ -71,7 +74,14 @@ class Analysis2 extends Component {
     visitData: [],
     salesData:[],
     offlineData:[],
-    offlineChartData:[]
+    offlineChartData:[],
+    data:[
+      {name:'设备2',value:'125',param:[{name:"参数1",value:'122'},{name:'参数2',value:'56'}]},
+      {name:'设备4',value:'32',param:[{name:"参数1",value:'122'},{name:'参数2',value:'56'}]},
+      {name:'设备5',value:'125',param:[{name:"参数1",value:'122'},{name:'参数2',value:'56'}]},
+      {name:'设备10',value:'54',param:[{name:"参数1",value:'122'},{name:'参数2',value:'56'}]},
+      {name:'设备12',value:'32',param:[{name:"参数1",value:'122'},{name:'参数2',value:'56'}]},
+    ]
   };
 
   componentDidMount() {
@@ -282,11 +292,20 @@ class Analysis2 extends Component {
       xl: 6,
       style: {marginBottom: 24},
     };
+    const setColumns = [{
+      title: '名称',
+      dataIndex: 'name',
+      key: 'name',
+    }, {
+      title: '值',
+      dataIndex: 'value',
+      key: 'age',
+    }];
     let salesDataRankingListData = sortBy(salesData, o => -o.y);
     let tempDataRankingListData = sortBy(salesData, o => -o.y);
     return (
       <GridContent>
-        <Row gutter={24}>
+        <Row gutter={16}>
           <Col {...topColResponsiveProps}>
             <ChartCard
               bordered={false}
@@ -371,7 +390,27 @@ class Analysis2 extends Component {
             </ChartCard>
           </Col>
         </Row>
-
+        <List
+          grid={{
+            gutter: 16, xs: 1, sm: 2, md: 2, lg: 4, xl: 4, xxl: 6,
+          }}
+          dataSource={this.state.data}
+          renderItem={item => (
+            <List.Item>
+              <Card  size="small" title={item.name}>
+                <Row>
+                  <Col span={12}> <Statistic title="实时数据1" value={item.value} /></Col>
+                  <Col span={12}><Statistic title="实时数据2" value={item.value} /></Col>
+                </Row>
+                <Table showHeader={false} size="small" columns={setColumns} dataSource={item.param} bordered={true} pagination={false}/>
+                <Row  style={{textAlign:'left',marginTop:'4px'}}>
+                  <Button type="primary" size="small" icon="api">点动1</Button>
+                  <Button  type="primary"  size="small" style={{marginLeft:'8px'}}>点动2</Button>
+                </Row>
+              </Card>
+            </List.Item>
+          )}
+        />
       {/*  <Card loading={loading} bordered={false} bodyStyle={{padding: 0}}>
           <div className={styles.salesCard}>
             <Tabs tabBarExtraContent={salesExtra} size="large" tabBarStyle={{marginBottom: 24}}>

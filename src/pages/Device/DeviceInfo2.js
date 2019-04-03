@@ -175,7 +175,7 @@ class CoverCardList extends PureComponent {
       key: 'address',
     }];
     const setDate = [{
-      name: '名称',
+      name: '当前值',
       age: '',
     }, {
       name: '偏差',
@@ -209,11 +209,19 @@ class CoverCardList extends PureComponent {
     },];
     const editDate = [{
       index: 'CS01',
-      name: '多功能减压阀球阀1，2动作设置',
+      name: '阀1',
       age: '设备编号1',
     }, {
       index: 'CS02',
-      name: '',
+      name: '阀2',
+      age: '',
+    }, {
+      index: 'CS02',
+      name: '阀3',
+      age: '',
+    }, {
+      index: 'CS02',
+      name: '阀4',
       age: '',
     }];
     const showColumns = [{
@@ -286,14 +294,13 @@ class CoverCardList extends PureComponent {
     const {targetKeys, selectedKeys, disabled} = this.state;
     return (
       <div>
-        <PageHeader
-          style={{ margin: '-24px -24px 0' }}
-          onBack={() => this.props.history.goBack()}
-          title="设置"
-        />
         <Card bordered={false} style={{marginTop:'24px'}}>
           <Collapse activeKey={['2']}>
             <Panel showArrow={false} header="设备参数设置" key="2"
+                   extra={ <Button size="small" type="primary" icon='setting' onClick={()=> {
+                     this.showVisible2(true)
+                   }
+                   }>设置</Button>}
                    >
               <div>
                 <Row gutter={12}>
@@ -311,7 +318,7 @@ class CoverCardList extends PureComponent {
                         "阀1"
                       }
                     >
-                     {/* <Table size="small" columns={setColumns} dataSource={setDate} bordered={true} pagination={false}/>*/}
+                    <Table size="small" columns={setColumns} dataSource={setDate} bordered={true} pagination={false}/>
                     </Card>
                     <div style={{textAlign: 'center', marginTop: '12px'}}>
                       <Button size="small" type="primary" icon='setting' >开阀</Button>
@@ -332,7 +339,7 @@ class CoverCardList extends PureComponent {
                         "阀2"
                       }
                     >
-                    {/*  <Table size="small" columns={setColumns} dataSource={setDate} bordered={true} pagination={false}/>*/}
+                     <Table size="small" columns={setColumns} dataSource={setDate} bordered={true} pagination={false}/>
                     </Card>
                     <div style={{textAlign: 'center', marginTop: '12px'}}>
                       <Button size="small" type="primary" icon='setting' >开阀</Button>
@@ -353,7 +360,7 @@ class CoverCardList extends PureComponent {
                         "阀3"
                       }
                     >
-                      {/*<Table size="small" columns={setColumns} dataSource={setDate} bordered={true} pagination={false}/>*/}
+                      <Table size="small" columns={setColumns} dataSource={setDate} bordered={true} pagination={false}/>
                     </Card>
                     <div style={{textAlign: 'center', marginTop: '12px'}}>
                       <Button size="small" type="primary" icon='setting' >开阀</Button>
@@ -374,7 +381,7 @@ class CoverCardList extends PureComponent {
                         "阀4"
                       }
                     >
-                      {/*<Table size="small" columns={setColumns} dataSource={setDate} bordered={true} pagination={false}/>*/}
+                      <Table size="small" columns={setColumns} dataSource={setDate} bordered={true} pagination={false}/>
                     </Card>
                     <div style={{textAlign: 'center', marginTop: '12px'}}>
                       <Button size="small" type="primary" icon='setting' >开阀</Button>

@@ -62,19 +62,26 @@ export default [
               },
               {
                 path: '/monitor/devices/info',
-                name: '设备实时数据',
-                component: './Device/DeviceInfo',
+                component: './Device/Info',
+                routes: [
+                  {
+                    path: '/monitor/devices/info/info',
+                    name: '设备实时数据',
+                    component: './Device/DeviceInfo',
+                  },
+                  {
+                    path: '/monitor/devices/info/setting',
+                    name: '设备配置',
+                    component: './Device/DeviceInfo2',
+                  },
+                  {
+                    path: '/monitor/devices/info/history',
+                    name: '设备历史数据',
+                    component: './Device/DeviceInfo3',
+                  },
+                  ]
               },
-              {
-                path: '/monitor/devices/setting',
-                name: '设备配置',
-                component: './Device/DeviceInfo2',
-              },
-              {
-                path: '/monitor/devices/history',
-                name: '设备历史数据',
-                component: './Device/DeviceInfo3',
-              },
+
             ],
           },
           // {

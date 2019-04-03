@@ -322,11 +322,11 @@ class TableList extends PureComponent {
       render: (text, record) => (
         <Fragment>
           {/*<a onClick={() => this.handleUpdateModalVisible(true, record)}>配置</a>*/}
-          <Link to={`/monitor/devices/info?id=${record.name}`}>实时数据</Link>
+          <Link to={`/monitor/devices/info/info?id=${record.name}`}>实时数据</Link>
           <Divider type="vertical" />
-          <Link to={`/monitor/devices/history?id=${record.name}`}>历史数据</Link>
+          <Link to={`/monitor/devices/info/history?id=${record.name}`}>历史数据</Link>
           <Divider type="vertical" />
-          <Link to={`/monitor/devices/setting?id=${record.name}`}>配置</Link>
+          <Link to={`/monitor/devices/info/setting?id=${record.name}`}>配置</Link>
         </Fragment>
       ),
     },
