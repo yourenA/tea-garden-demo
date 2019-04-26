@@ -1,5 +1,5 @@
 {
-  "name": "ant-design-pro",
+  "name": "辂轺茶园",
   "version": "2.1.0",
   "description": "An out-of-box UI solution for enterprise applications",
   "private": true,
@@ -68,7 +68,7 @@
     "eslint-config-airbnb": "^17.0.0",
     "eslint-config-prettier": "^3.0.1",
     "eslint-plugin-babel": "^5.1.0",
-    "eslint-plugin-compat": "^2.6.2", 
+    "eslint-plugin-compat": "^2.6.2",
     "eslint-plugin-import": "^2.8.0",
     "eslint-plugin-jsx-a11y": "^6.1.2",
     "eslint-plugin-markdown": "^1.0.0-beta.6",
