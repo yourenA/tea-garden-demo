@@ -15,7 +15,7 @@ export default {
   effects: {
     *login({ payload }, { call, put }) {
       console.log('payload',payload)
-      let response = yield call(fakeAccountLogin, payload);
+      let response ={};
       const { password, username, type } = payload;
       if (password === '123456' && username === 'admin') {
         response={
