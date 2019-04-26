@@ -21,20 +21,10 @@ const nullSlectItem = {
 class GeographicView extends PureComponent {
   componentDidMount = () => {
     const { dispatch } = this.props;
-    dispatch({
-      type: 'geographic/fetchProvince',
-    });
   };
 
   componentDidUpdate(props) {
     const { dispatch, value } = this.props;
-
-    if (!props.value && !!value && !!value.province) {
-      dispatch({
-        type: 'geographic/fetchCity',
-        payload: value.province.key,
-      });
-    }
   }
 
   getProvinceOption() {
@@ -55,11 +45,7 @@ class GeographicView extends PureComponent {
         </Option>
       );
     }
-    return list.map(item => (
-      <Option key={item.id} value={item.id}>
-        {item.name}
-      </Option>
-    ));
+    return null
   };
 
   selectProvinceItem = item => {
